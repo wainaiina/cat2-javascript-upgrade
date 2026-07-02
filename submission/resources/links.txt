@@ -1,2 +1,1 @@
-Live Render deployment:
-PASTE-YOUR-LIVE-URL-HERE.onrender.com
+Live Render deployment: https://cat2-javascript-upgrade-uq3m.onrender.com
