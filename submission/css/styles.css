@@ -764,3 +764,24 @@ footer {
   border-color: var(--dark);
 }
 
+/* --- Form validation feedback (Feature 3) --- */
+.form-feedback {
+  margin-top: 1rem;
+  padding: 0;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+}
+
+.form-feedback.success {
+  padding: 0.9rem 1.1rem;
+  background: #eaf5ea;
+  color: #1f5c2e;
+  border-left: 3px solid #3d8b52;
+}
+
+.form-feedback.error {
+  padding: 0.9rem 1.1rem;
+  background: #fbebeb;
+  color: #7a2222;
+  border-left: 3px solid #c0392b;
+}

@@ -1,1 +1,48 @@
-Implementation notes will be completed as features are added.
+Implementation Notes — CAT 2 JavaScript Upgrade
+Site: Amara Wanjiku Photography
+Student: Christian Wainaina
+
+All JavaScript lives in submission/js/script.js, linked externally from
+index.html with <script src="js/script.js" defer>. No inline <script>
+blocks, no onclick attributes, no frameworks or libraries.
+
+1. LOOP-RENDERED DYNAMIC CONTENT
+   The four service cards (Portrait, Wedding, Wildlife & Travel, Real
+   Estate) were removed from the HTML and now live in a `services` array
+   of objects in script.js. Each object has a `name` property plus icon,
+   description, and price. renderServices() loops over the array with
+   forEach() and builds each card with createElement/appendChild into
+   the #services-container div.
+
+2. DYNAMICALLY ADD & REMOVE ELEMENTS
+   New "Shot Wishlist" section: visitors type a shot idea and click
+   "Add Shot" (or press Enter). Each item is built with createElement()
+   and added with appendChild(). Every item gets its own Remove button
+   which deletes it with remove().
+
+3. FORM HANDLING WITH VALIDATION FEEDBACK
+   The booking form (#contact-form) is intercepted with
+   event.preventDefault(). Name, email, service, and message are read
+   with .value. Validation checks (empty name, malformed email, message
+   under 10 characters) write an error message into #form-feedback via
+   textContent; a valid submission writes a personalised confirmation
+   and resets the form. Success/error styling is applied with CSS
+   classes.
+
+4. PERSISTENT STATE WITH localStorage
+   The Shot Wishlist is saved to localStorage (key:
+   "amara-shot-wishlist") every time an item is added or removed, and
+   restored when the page loads — so the list survives a full page
+   reload.
+
+5. CLICK-TO-REVEAL ON THE BANNER
+   images/banner.jpg is displayed at the top of <main>. Clicking it
+   calls classList.toggle("revealed") on its wrapper, fading in an
+   overlay caption ("Behind the Lens"). Clicking again hides it — the
+   same Toggling Classes pattern from class.
+
+STRUCTURE FIXES CARRIED OVER FROM MIDTERM
+- Moved the real sketch image to images/sketch.jpg (it was misplaced as
+  submission/sketch.jpg.jpeg, leaving a 0-byte images/sketch.jpg).
+- Moved conversation.txt from images/resources/ to resources/.
+- Added images/banner.jpg (required by the structure and Feature 5).

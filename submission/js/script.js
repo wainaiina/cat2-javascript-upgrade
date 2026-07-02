@@ -172,6 +172,56 @@ function initWishlist() {
 }
 
 /* =====================================================
+   FEATURE 3 — Form handling with validation feedback
+   The booking form is intercepted with preventDefault().
+   Values are read with .value, checked, and feedback is
+   written back to the page with textContent.
+   ===================================================== */
+
+function initContactForm() {
+  const form = document.getElementById("contact-form");
+  const feedback = document.getElementById("form-feedback");
+  if (!form || !feedback) return;
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const service = document.getElementById("service").value;
+    const message = document.getElementById("message").value.trim();
+
+    /* Simple validation checks */
+    if (name === "") {
+      showFeedback("Please enter your name.", false);
+      return;
+    }
+    if (email === "" || email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+      showFeedback("Please enter a valid email address.", false);
+      return;
+    }
+    if (message.length < 10) {
+      showFeedback("Please write a message of at least 10 characters.", false);
+      return;
+    }
+
+    const chosen = service === "" ? "a session" : service + " photography";
+    showFeedback(
+      "Thank you, " + name + "! Your enquiry about " + chosen +
+      " has been received. Amara will reply to " + email + " within 24 hours.",
+      true
+    );
+    form.reset();
+  });
+
+  function showFeedback(text, isSuccess) {
+    feedback.textContent = text;
+    feedback.classList.remove("success", "error");
+    feedback.classList.add(isSuccess ? "success" : "error");
+  }
+}
+
+/* =====================================================
    FEATURE 5 — Click-to-reveal on the banner
    Clicking the banner image toggles a class on its
    wrapper with classList.toggle(), revealing an overlay
@@ -196,4 +246,5 @@ function initBannerReveal() {
 
 renderServices();
 initWishlist();
+initContactForm();
 initBannerReveal();
