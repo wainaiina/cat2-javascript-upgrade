@@ -74,6 +74,65 @@ function renderServices() {
 }
 
 /* =====================================================
+   FEATURE 2 — Dynamically add & remove elements
+   "Shot Wishlist": visitors type a dream shot idea and
+   add it to a list (createElement + appendChild). Every
+   item gets its own Remove button (remove()).
+   ===================================================== */
+
+function createWishlistItem(text) {
+  const li = document.createElement("li");
+  li.className = "wishlist-item";
+
+  const span = document.createElement("span");
+  span.className = "wishlist-text";
+  span.textContent = text;
+
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "wishlist-remove";
+  removeBtn.textContent = "Remove";
+  removeBtn.addEventListener("click", function () {
+    li.remove();
+  });
+
+  li.appendChild(span);
+  li.appendChild(removeBtn);
+  return li;
+}
+
+function addWishlistItem() {
+  const input = document.getElementById("wishlist-input");
+  const list = document.getElementById("wishlist-list");
+  const text = input.value.trim();
+
+  if (text === "") {
+    input.focus();
+    return;
+  }
+
+  list.appendChild(createWishlistItem(text));
+  input.value = "";
+  input.focus();
+}
+
+function initWishlist() {
+  const addBtn = document.getElementById("wishlist-add");
+  const input = document.getElementById("wishlist-input");
+  const list = document.getElementById("wishlist-list");
+  if (!addBtn || !input || !list) return;
+
+  addBtn.addEventListener("click", addWishlistItem);
+
+  input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addWishlistItem();
+    }
+  });
+}
+
+/* =====================================================
    FEATURE 5 — Click-to-reveal on the banner
    Clicking the banner image toggles a class on its
    wrapper with classList.toggle(), revealing an overlay
@@ -97,4 +156,5 @@ function initBannerReveal() {
    ===================================================== */
 
 renderServices();
+initWishlist();
 initBannerReveal();

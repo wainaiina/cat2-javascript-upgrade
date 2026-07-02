@@ -699,3 +699,68 @@ footer {
   transform: translateY(0);
 }
 
+/* --- Shot wishlist (Features 2 & 4) --- */
+#wishlist {
+  background: var(--mid);
+}
+
+.wishlist-controls {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+#wishlist-input {
+  flex: 1;
+  min-width: 16rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #d8d2c4;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 1rem;
+  background: #fff;
+}
+
+#wishlist-input:focus {
+  outline: 2px solid var(--gold);
+  border-color: var(--gold);
+}
+
+.wishlist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 42rem;
+}
+
+.wishlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  padding: 0.8rem 1.1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border-left: 3px solid var(--gold);
+}
+
+.wishlist-remove {
+  border: 1px solid #d8d2c4;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wishlist-remove:hover {
+  background: var(--dark);
+  color: var(--light);
+  border-color: var(--dark);
+}
+
