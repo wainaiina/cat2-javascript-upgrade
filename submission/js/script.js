@@ -78,8 +78,38 @@ function renderServices() {
    "Shot Wishlist": visitors type a dream shot idea and
    add it to a list (createElement + appendChild). Every
    item gets its own Remove button (remove()).
+
+   FEATURE 4 — Persistent state with localStorage
+   The wishlist is saved to localStorage on every change
+   and restored on page load, so it survives a reload.
    ===================================================== */
 
+const WISHLIST_KEY = "amara-shot-wishlist";
+
+function getSavedWishlist() {
+  try {
+    const raw = localStorage.getItem(WISHLIST_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function saveWishlist(items) {
+  localStorage.setItem(WISHLIST_KEY, JSON.stringify(items));
+}
+
+/* Reads the current list items from the DOM and saves them */
+function syncWishlistToStorage() {
+  const list = document.getElementById("wishlist-list");
+  const items = [];
+  list.querySelectorAll(".wishlist-text").forEach(function (span) {
+    items.push(span.textContent);
+  });
+  saveWishlist(items);
+}
+
+/* Builds one <li> with its text and its own Remove button */
 function createWishlistItem(text) {
   const li = document.createElement("li");
   li.className = "wishlist-item";
@@ -94,6 +124,7 @@ function createWishlistItem(text) {
   removeBtn.textContent = "Remove";
   removeBtn.addEventListener("click", function () {
     li.remove();
+    syncWishlistToStorage();
   });
 
   li.appendChild(span);
@@ -111,9 +142,11 @@ function addWishlistItem() {
     return;
   }
 
-  list.appendChild(createWishlistItem(text));
+  const li = createWishlistItem(text);
+  list.appendChild(li);
   input.value = "";
   input.focus();
+  syncWishlistToStorage();
 }
 
 function initWishlist() {
@@ -122,8 +155,14 @@ function initWishlist() {
   const list = document.getElementById("wishlist-list");
   if (!addBtn || !input || !list) return;
 
+  /* Restore anything saved from a previous visit (Feature 4) */
+  getSavedWishlist().forEach(function (text) {
+    list.appendChild(createWishlistItem(text));
+  });
+
   addBtn.addEventListener("click", addWishlistItem);
 
+  /* Pressing Enter in the input also adds the item */
   input.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
